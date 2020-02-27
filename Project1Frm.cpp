@@ -29,6 +29,7 @@ BEGIN_EVENT_TABLE(Project1Frm,wxFrame)
 	EVT_CLOSE(Project1Frm::OnClose)
 	EVT_ACTIVATE(Project1Frm::Project1FrmActivate)
 	EVT_BUTTON(ID_WXBUTTON2,Project1Frm::WxButton2Click)
+	EVT_BUTTON(ID_WXBUTTON1,Project1Frm::WxButton1Click0)
 END_EVENT_TABLE()
 ////Event Table End
 
@@ -50,7 +51,7 @@ void Project1Frm::CreateGUIControls()
 	//Add the custom code before or after the blocks
 	////GUI Items Creation Start
 
-	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(647, 22), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
+	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(646, 22), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
 
 	WxPanel1 = new wxPanel(this, ID_WXPANEL1, wxPoint(40, 24), wxSize(533, 373));
 
@@ -99,6 +100,14 @@ void Project1Frm::Project1FrmActivate(wxActivateEvent& event)
  * WxButton2Click
  */
 void Project1Frm::WxButton2Click(wxCommandEvent& event)
+{
+	// insert your code here
+}
+
+/*
+ * WxButton1Click0
+ */
+void Project1Frm::WxButton1Click0(wxCommandEvent& event)
 {
 	// insert your code here
 }

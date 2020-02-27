@@ -34,11 +34,12 @@ object frmNewForm: TfrmNewForm
   TextHeight = 15
   object WxButton1: TWxButton
     Left = 647
-    Top = 22
+    Top = 21
     Width = 231
     Height = 42
     Caption = 'Upload Image'
     TabOrder = 0
+    EVT_BUTTON = 'WxButton1Click0'
     Wx_BKColor = clBlack
     Wx_ButtonStyle = []
     Wx_Class = 'wxButton'
