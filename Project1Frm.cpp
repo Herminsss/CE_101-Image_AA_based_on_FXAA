@@ -34,7 +34,10 @@ BEGIN_EVENT_TABLE(Project1Frm,wxFrame)
 	
 	EVT_CLOSE(Project1Frm::OnClose)
 	EVT_ACTIVATE(Project1Frm::Project1FrmActivate)
+	EVT_BUTTON(ID_WXBUTTON3,Project1Frm::WxButton3Click)
 	EVT_BUTTON(ID_WXBUTTON2,Project1Frm::WxButton2Click)
+	
+	EVT_UPDATE_UI(ID_WXPANEL1,Project1Frm::WxPanel1UpdateUI0)
 	EVT_BUTTON(ID_WXBUTTON1,Project1Frm::WxButton1Click0)
 END_EVENT_TABLE()
 ////Event Table End
@@ -57,19 +60,17 @@ void Project1Frm::CreateGUIControls()
 	//Add the custom code before or after the blocks
 	////GUI Items Creation Start
 
-	wxInitAllImageHandlers();   //Initialize graphic format handlers
+	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(644, 21), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
 
-	WxStaticBitmap1 = new wxStaticBitmap(this, ID_WXSTATICBITMAP1, wxNullBitmap, wxPoint(24, 9), wxSize(600, 398) );
-
-	WxSaveFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_SAVE);
-
-	WxOpenFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_OPEN);
-
-	WxButton3 = new wxButton(this, ID_WXBUTTON3, _("Save Image"), wxPoint(647, 328), wxSize(228, 38), 0, wxDefaultValidator, _("WxButton3"));
+	WxPanel1 = new wxPanel(this, ID_WXPANEL1, wxPoint(42, 24), wxSize(533, 373));
 
 	WxButton2 = new wxButton(this, ID_WXBUTTON2, _("Anti-alias image"), wxPoint(647, 165), wxSize(231, 43), 0, wxDefaultValidator, _("WxButton2"));
 
-	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(644, 21), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
+	WxButton3 = new wxButton(this, ID_WXBUTTON3, _("Save Image"), wxPoint(648, 327), wxSize(228, 38), 0, wxDefaultValidator, _("WxButton3"));
+
+	WxOpenFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_OPEN);
+
+	WxSaveFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_SAVE);
 
 	SetTitle(_("Project1"));
 	SetIcon(wxNullIcon);
@@ -91,20 +92,44 @@ void Project1Frm::OnClose(wxCloseEvent& event)
     bool ImageState = false;
     
 void Project1Frm::WxButton1Click(wxCommandEvent& event)
-{   
-    WxOpenFileDialog1->ShowModal();
+{
+	 WxOpenFileDialog1->ShowModal();
     if (WxOpenFileDialog1->GetPath().IsEmpty())
     {
         return;
     }
     
     ImageState = input.LoadFile(WxOpenFileDialog1->GetPath(), wxBITMAP_TYPE_ANY);
+	int h = input.GetHeight();
+    int w = input.GetWidth();
     
-}
+    white.Create(w,h);
+    
+    	for (int x = 0; x < w; x++)
+		{
+			 for (int y = 0; y < h; y++)
+			{
+				white.SetRGB(x, y, 240, 240, 240);
+			}
+		}
+    
+    if (300 >= (h*300/w))
+    {    
+        WxStaticBitmap1->SetBitmap(white.Scale(600,h*400/w));
+        WxStaticBitmap1->SetBitmap(input.Scale(600,h*400/w));
+    } 
+    else
+    {
+        WxStaticBitmap1->SetBitmap(white.Scale(w*600/h,400));
+        WxStaticBitmap1->SetBitmap(input.Scale(w*600/h,400));
+    }
+    
+    
+    }
 
-/*
- * WxPanel1UpdateUI
- */
+int Top =0;
+int Left =0;
+
 void Project1Frm::WxPanel1UpdateUI(wxUpdateUIEvent& event)
 {
 	// insert your code here
@@ -140,4 +165,12 @@ void Project1Frm::WxButton1Click0(wxCommandEvent& event)
 void Project1Frm::WxPanel1UpdateUI0(wxUpdateUIEvent& event)
 {
 	
+}
+
+/*
+ * WxButton3Click
+ */
+void Project1Frm::WxButton3Click(wxCommandEvent& event)
+{
+	 WxSaveFileDialog1->ShowModal();
 }

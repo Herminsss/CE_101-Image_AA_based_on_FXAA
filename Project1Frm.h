@@ -50,6 +50,7 @@ class Project1Frm : public wxFrame
 		void WxButton2Click(wxCommandEvent& event);
 		void WxButton1Click0(wxCommandEvent& event);
 		void WxPanel1UpdateUI0(wxUpdateUIEvent& event);
+		void WxButton3Click(wxCommandEvent& event);
 		
 	private:
 		//Do not add custom control declarations between
