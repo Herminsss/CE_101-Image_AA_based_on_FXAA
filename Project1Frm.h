@@ -26,6 +26,7 @@
 //Header Include Start and Header Include End.
 //wxDev-C++ designer will remove them. Add custom headers after the block.
 ////Header Include Start
+#include <wx/filedlg.h>
 #include <wx/panel.h>
 #include <wx/button.h>
 ////Header Include End
@@ -48,12 +49,15 @@ class Project1Frm : public wxFrame
 		void Project1FrmActivate(wxActivateEvent& event);
 		void WxButton2Click(wxCommandEvent& event);
 		void WxButton1Click0(wxCommandEvent& event);
+		void WxPanel1UpdateUI0(wxUpdateUIEvent& event);
 		
 	private:
 		//Do not add custom control declarations between
 		//GUI Control Declaration Start and GUI Control Declaration End.
 		//wxDev-C++ will remove them. Add custom code after the block.
 		////GUI Control Declaration Start
+		wxFileDialog *WxSaveFileDialog1;
+		wxFileDialog *WxOpenFileDialog1;
 		wxButton *WxButton3;
 		wxButton *WxButton2;
 		wxPanel *WxPanel1;

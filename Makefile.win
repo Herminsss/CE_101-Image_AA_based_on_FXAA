@@ -1,14 +1,14 @@
 # Project: Image_AA_based_on_FXAA
 # Compiler: Default GCC compiler
 # Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 27/02/20 11:33
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 02/03/20 13:08
 
 WXLIBNAME = wxmsw29u
 CPP       = g++.exe
 CC        = gcc.exe
 WINDRES   = "windres.exe"
-OBJ       = Default\ Profile/main.o Default\ Profile/imageAA.o Default\ Profile/Project1App.o Default\ Profile/Project1Frm.o Default\ Profile/Image_AA_based_on_FXAA_private.res
-LINKOBJ   = "Default Profile/main.o" "Default Profile/imageAA.o" "Default Profile/Project1App.o" "Default Profile/Project1Frm.o" "Default Profile/Image_AA_based_on_FXAA_private.res"
+OBJ       = Default\ Profile/main.o Default\ Profile/imageAA.o Default\ Profile/GUIApp.o Default\ Profile/GUIFrm.o Default\ Profile/Image_AA_based_on_FXAA_private.res
+LINKOBJ   = "Default Profile/main.o" "Default Profile/imageAA.o" "Default Profile/GUIApp.o" "Default Profile/GUIFrm.o" "Default Profile/Image_AA_based_on_FXAA_private.res"
 LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -g3 
 INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
@@ -42,11 +42,11 @@ Default\ Profile/main.o: $(GLOBALDEPS) main.cpp
 Default\ Profile/imageAA.o: $(GLOBALDEPS) imageAA.cpp
 	$(CPP) -c imageAA.cpp -o "Default Profile/imageAA.o" $(CXXFLAGS)
 
-Default\ Profile/Project1App.o: $(GLOBALDEPS) Project1App.cpp Project1App.h Project1Frm.h
-	$(CPP) -c Project1App.cpp -o "Default Profile/Project1App.o" $(CXXFLAGS)
+Default\ Profile/GUIApp.o: $(GLOBALDEPS) GUIApp.cpp
+	$(CPP) -c GUIApp.cpp -o "Default Profile/GUIApp.o" $(CXXFLAGS)
 
-Default\ Profile/Project1Frm.o: $(GLOBALDEPS) Project1Frm.cpp Project1Frm.h
-	$(CPP) -c Project1Frm.cpp -o "Default Profile/Project1Frm.o" $(CXXFLAGS)
+Default\ Profile/GUIFrm.o: $(GLOBALDEPS) GUIFrm.cpp GUIFrm.h
+	$(CPP) -c GUIFrm.cpp -o "Default Profile/GUIFrm.o" $(CXXFLAGS)
 
-Default\ Profile/Image_AA_based_on_FXAA_private.res: Default\ Profile/Image_AA_based_on_FXAA_private.rc Project1App.rc 
+Default\ Profile/Image_AA_based_on_FXAA_private.res: Default\ Profile/Image_AA_based_on_FXAA_private.rc GUIApp.rc 
 	$(WINDRES) --input-format=rc -o "Default Profile/Image_AA_based_on_FXAA_private.res" $(RCINCS) DEFAUL~1/IMAGE_~1.RC -O coff

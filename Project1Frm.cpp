@@ -9,6 +9,12 @@
 ///------------------------------------------------------------------
 
 #include "Project1Frm.h"
+#include <wx/bitmap.h>
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <cmath>
+#include <vector>
 
 //Do not add custom headers between
 //Header Include Start and Header Include End
@@ -51,13 +57,19 @@ void Project1Frm::CreateGUIControls()
 	//Add the custom code before or after the blocks
 	////GUI Items Creation Start
 
-	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(646, 22), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
+	wxInitAllImageHandlers();   //Initialize graphic format handlers
 
-	WxPanel1 = new wxPanel(this, ID_WXPANEL1, wxPoint(40, 24), wxSize(533, 373));
+	WxStaticBitmap1 = new wxStaticBitmap(this, ID_WXSTATICBITMAP1, wxNullBitmap, wxPoint(24, 9), wxSize(600, 398) );
+
+	WxSaveFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_SAVE);
+
+	WxOpenFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_OPEN);
+
+	WxButton3 = new wxButton(this, ID_WXBUTTON3, _("Save Image"), wxPoint(647, 328), wxSize(228, 38), 0, wxDefaultValidator, _("WxButton3"));
 
 	WxButton2 = new wxButton(this, ID_WXBUTTON2, _("Anti-alias image"), wxPoint(647, 165), wxSize(231, 43), 0, wxDefaultValidator, _("WxButton2"));
 
-	WxButton3 = new wxButton(this, ID_WXBUTTON3, _("Save Image"), wxPoint(647, 328), wxSize(228, 38), 0, wxDefaultValidator, _("WxButton3"));
+	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(644, 21), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
 
 	SetTitle(_("Project1"));
 	SetIcon(wxNullIcon);
@@ -72,12 +84,22 @@ void Project1Frm::OnClose(wxCloseEvent& event)
 	Destroy();
 }
 
-/*
- * WxButton1Click
- */
+    // Used for wxButton1 loop
+    wxImage input;
+    wxImage output;
+    wxImage white;
+    bool ImageState = false;
+    
 void Project1Frm::WxButton1Click(wxCommandEvent& event)
-{
-	// insert your code here
+{   
+    WxOpenFileDialog1->ShowModal();
+    if (WxOpenFileDialog1->GetPath().IsEmpty())
+    {
+        return;
+    }
+    
+    ImageState = input.LoadFile(WxOpenFileDialog1->GetPath(), wxBITMAP_TYPE_ANY);
+    
 }
 
 /*
@@ -93,7 +115,7 @@ void Project1Frm::WxPanel1UpdateUI(wxUpdateUIEvent& event)
  */
 void Project1Frm::Project1FrmActivate(wxActivateEvent& event)
 {
-	// insert your code here
+	
 }
 
 /*
@@ -110,4 +132,12 @@ void Project1Frm::WxButton2Click(wxCommandEvent& event)
 void Project1Frm::WxButton1Click0(wxCommandEvent& event)
 {
 	// insert your code here
+}
+
+/*
+ * WxPanel1UpdateUI0
+ */
+void Project1Frm::WxPanel1UpdateUI0(wxUpdateUIEvent& event)
+{
+	
 }
