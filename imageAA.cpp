@@ -177,7 +177,12 @@ private std::vector< vector< vector< unsigned char > > > antiAlias
 			// Is the local edge horizontal or vertical ?
 			isHorizontal = classifyEdgeHorizontal(luma, y, x);
 			
-			
+			if (isHorizontal){
+				aaColor[y].pushback({0, 0, 255});
+			}
+			else{
+				aaColor[y].pushback({0, 255, 255});	
+			} 
 		}
 	}
 	
