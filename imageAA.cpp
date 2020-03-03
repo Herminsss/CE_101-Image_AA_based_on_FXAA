@@ -2,25 +2,26 @@
 #include <wx/image.h>
 #include <vector>
 
+using namespace std;
 //-------------------------------------------------------------------
 //Math function recreations for doubles
 //-------------------------------------------------------------------
 
-private double dmax (double a, double b)
+double dmax (double a, double b)
 {
 	double max;
 	max = b > a ? b : a;
 	return max;
 }
 
-private double dmin (double a, double b)
+double dmin (double a, double b)
 {
 	double min;
 	min = b < a ? b : a; 
 	return min;
 }
 
-private double dabs (double a)
+double dabs (double a)
 {
 	double abs;
 	abs = a > 0 ? a : -a;
@@ -33,7 +34,7 @@ private double dabs (double a)
 
 //Store Image as 3D vector (width, height, RGB)
 	
-private std::vector< vector< vector< unsigned char > > > 
+std::vector< vector< vector< unsigned char > > > 
 						retrieveImageColor (wxImage image)
 {
 	std::vector< vector< vector< unsigned char > > > color;
@@ -45,7 +46,7 @@ private std::vector< vector< vector< unsigned char > > >
 	
 	for (int y = 0; y < height; y++)
 	{
-		retrieveColor.pushback();
+		color.push_back({});
 		
 		for (int x = 0; x < width; x++)
 		{
@@ -62,7 +63,7 @@ private std::vector< vector< vector< unsigned char > > >
 
 //Convert 3D vector of colors (width, height, RGB) to Image
 
-private wxImage outputImage (std::vector< vector< vector< unsigned char > > > color)
+wxImage outputImage (std::vector< vector< vector< unsigned char > > > color)
 {
 	int height, width;
 	unsigned char red, green, blue;
@@ -74,7 +75,7 @@ private wxImage outputImage (std::vector< vector< vector< unsigned char > > > co
 	
 	for (int y = 0; y < height; y++)
 	{
-		retrieveColor.pushback();
+		color.push_back();
 		
 		for (int x = 0; x < width; x++)
 		{
@@ -93,7 +94,7 @@ private wxImage outputImage (std::vector< vector< vector< unsigned char > > > co
 
 //Compute for the luma values of all pixels in the image
 
-private std::vector< vector< double > > convertColortoLuma
+std::vector< vector< double > > convertColortoLuma
 			(std::vector< vector< vector < unsigned char > > > color)
 {
 	std::vector< vector<unsigned char> > luma;
@@ -104,14 +105,14 @@ private std::vector< vector< double > > convertColortoLuma
 	
 	for (int y = 0; y < height; y++)
 	{
-		luma.pushback();
+		luma.push_back();
 		
 		for (int x = 0; x < width; x++)
 		{
 			currLuma = 	(double) color[y][x][0] / 255 * 0.2126 
 						+ color[y][x][1] /255 * 0.7152
 						+ color[y][x][2] /255 * 0.0722;
-			luma.pushback[y]](currLuma);
+			luma.push_back[y]](currLuma);
 		}
 	}
 	
@@ -120,7 +121,7 @@ private std::vector< vector< double > > convertColortoLuma
 
 //Determine whether current edge pixel is Horizontal or Vertical
 
-private bool classifyEdgeHorizontal(std::vector< vector< double > > luma, int y, int x)
+bool classifyEdgeHorizontal(std::vector< vector< double > > luma, int y, int x)
 {
 	bool isHorizontal;
 	double edgeHorizontal, edgeVertical;
@@ -139,7 +140,7 @@ private bool classifyEdgeHorizontal(std::vector< vector< double > > luma, int y,
 //Main function for antialiasing logic, takes inputs and outputs of
 //images in 3D vector format (width, height, RGB)
 
-private std::vector< vector< vector< unsigned char > > > antiAlias 
+std::vector< vector< vector< unsigned char > > > antiAlias 
 	(	std::vector< vector< vector< unsigned char > > > color,
 		double edgeThreshold, 
 		double edgeThresholdMin
@@ -159,7 +160,7 @@ private std::vector< vector< vector< unsigned char > > > antiAlias
 	
 	for (int y = 1; y < height-1; y++)
 	{
-		aaColor.pushback();
+		aaColor.push_back();
 		
 		for (int x = 1; x < width-1; x++)
 		{
@@ -171,17 +172,17 @@ private std::vector< vector< vector< unsigned char > > > antiAlias
 			if (range < edgeThresholdMin || 
 				range < edgeThreshold * rangeMax)
 			{
-				aaColor[y].pushback(color[y][x]);
+				aaColor[y].push_back(color[y][x]);
 			}
 			
 			// Is the local edge horizontal or vertical ?
 			isHorizontal = classifyEdgeHorizontal(luma, y, x);
 			
 			if (isHorizontal){
-				aaColor[y].pushback({0, 0, 255});
+				aaColor[y].push_back({0, 0, 255});
 			}
 			else{
-				aaColor[y].pushback({0, 255, 255});	
+				aaColor[y].push_back({0, 255, 255});	
 			} 
 		}
 	}
@@ -194,7 +195,7 @@ private std::vector< vector< vector< unsigned char > > > antiAlias
 //Invokable external function for antialiasing
 //Includes the conversions to and from 3D vector format and wxImages 
 
-public wxImage antiAliasImage (wxImage inputImage){
+wxImage antiAliasImage (wxImage inputImage){
 	wxImage outImg;
 	std::vector< vector< vector< unsigned char > > > color;
 	std::vector< vector< vector< unsigned char > > > outColor;
