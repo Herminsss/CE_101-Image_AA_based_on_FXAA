@@ -172,5 +172,7 @@ void Project1Frm::WxPanel1UpdateUI0(wxUpdateUIEvent& event)
  */
 void Project1Frm::WxButton3Click(wxCommandEvent& event)
 {
-	 WxSaveFileDialog1->ShowModal();
+	 	 WxSaveFileDialog1->ShowModal();
+	 if (WxSaveFileDialog1->GetPath().IsEmpty()) return;
+	 input.SaveFile(WxSaveFileDialog1 -> GetPath());
 }
