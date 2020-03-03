@@ -54,6 +54,7 @@ std::vector< vector< vector< unsigned char > > >
 			green = image.GetGreen(x, y);
 			blue = image.GetBlue(x, y);
 			
+
 			color[y].push_back({red, green, blue});
 		}
 	}
