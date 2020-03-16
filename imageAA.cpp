@@ -46,7 +46,7 @@ std::vector< vector< vector< unsigned char > > >
 	
 	for (int y = 0; y < height; y++)
 	{
-		color.push_back({});
+		vector< vector< unsigned char> > row;
 		
 		for (int x = 0; x < width; x++)
 		{
@@ -54,8 +54,9 @@ std::vector< vector< vector< unsigned char > > >
 			green = image.GetGreen(x, y);
 			blue = image.GetBlue(x, y);
 			
-			color[y].push_back({red, green, blue});
+			row.push_back({red, green, blue});
 		}
+		color.push_back(row);
 	}
 	
 	return color;
@@ -74,9 +75,7 @@ wxImage outputImage (std::vector< vector< vector< unsigned char > > > color)
 	Image = wxImage(width, height);
 	
 	for (int y = 0; y < height; y++)
-	{
-		color.push_back();
-		
+	{	
 		for (int x = 0; x < width; x++)
 		{
 			red = color[y][x][0];
@@ -105,15 +104,16 @@ std::vector< vector< double > > convertColortoLuma
 	
 	for (int y = 0; y < height; y++)
 	{
-		luma.push_back();
+		vector< double > row
 		
 		for (int x = 0; x < width; x++)
 		{
 			currLuma = 	(double) color[y][x][0] / 255 * 0.2126 
 						+ color[y][x][1] /255 * 0.7152
 						+ color[y][x][2] /255 * 0.0722;
-			luma.push_back[y]](currLuma);
+			row.push_back(currLuma);
 		}
+		luma.push_back(row);
 	}
 	
 	return luma;
@@ -160,8 +160,7 @@ std::vector< vector< vector< unsigned char > > > antiAlias
 	
 	for (int y = 1; y < height-1; y++)
 	{
-		aaColor.push_back();
-		
+		vector< vector< unsigned char > > row;
 		for (int x = 1; x < width-1; x++)
 		{
 			rangeMin = dmin(luma[y][x], dmin(dmin(luma[y-1][x], luma[y][x-1]), dmin(luma[y+1][x], luma[y][x+1])));
@@ -172,19 +171,20 @@ std::vector< vector< vector< unsigned char > > > antiAlias
 			if (range < edgeThresholdMin || 
 				range < edgeThreshold * rangeMax)
 			{
-				aaColor[y].push_back(color[y][x]);
+				row.push_back(color[y][x]);
 			}
 			
 			// Is the local edge horizontal or vertical ?
 			isHorizontal = classifyEdgeHorizontal(luma, y, x);
 			
 			if (isHorizontal){
-				aaColor[y].push_back({0, 0, 255});
+				row.push_back({0, 0, 255});
 			}
 			else{
-				aaColor[y].push_back({0, 255, 255});	
+				row.push_back({0, 255, 255});	
 			} 
 		}
+		aaColor.push_back(row);
 	}
 	
 	return aaColor;

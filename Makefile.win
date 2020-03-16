@@ -1,52 +1,37 @@
 # Project: Image_AA_based_on_FXAA
-# Compiler: Default GCC compiler
-# Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 03/03/20 11:54
+# Makefile created by Dev-C++ 5.11
 
-WXLIBNAME = wxmsw29u
-CPP       = g++.exe
-CC        = gcc.exe
-WINDRES   = "windres.exe"
-OBJ       = Default\ Profile/main.o Default\ Profile/imageAA.o Default\ Profile/Project1App.o Default\ Profile/Project1Frm.o Default\ Profile/Image_AA_based_on_FXAA_private.res
-LINKOBJ   = "Default Profile/main.o" "Default Profile/imageAA.o" "Default Profile/Project1App.o" "Default Profile/Project1Frm.o" "Default Profile/Image_AA_based_on_FXAA_private.res"
-LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -g3 
-INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
-CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
-RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
-BIN       = Default Profile/Image_AA_based_on_FXAA.exe
-DEFINES   = 
-CXXFLAGS  = $(CXXINCS) $(DEFINES)   -g3
-CFLAGS    = $(INCS) $(DEFINES)   -g3
-GPROF     = gprof.exe
-ifeq ($(OS),Windows_NT)
-   RM = del /Q
-   FixPath = $(subst /,\,$1)
-else
-   RM = rm -f
-   FixPath = $1
-endif
-LINK      = g++.exe
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o imageAA.o Project1App.o Project1Frm.o
+LINKOBJ  = main.o imageAA.o Project1App.o Project1Frm.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = Image_AA_based_on_FXAA.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
+
 all: all-before $(BIN) all-after
 
 clean: clean-custom
-	$(RM) $(call FixPath,$(LINKOBJ)) "$(call FixPath,$(BIN))"
+	${RM} $(OBJ) $(BIN)
 
 $(BIN): $(OBJ)
-	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-Default\ Profile/main.o: $(GLOBALDEPS) main.cpp
-	$(CPP) -c main.cpp -o "Default Profile/main.o" $(CXXFLAGS)
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
 
-Default\ Profile/imageAA.o: $(GLOBALDEPS) imageAA.cpp
-	$(CPP) -c imageAA.cpp -o "Default Profile/imageAA.o" $(CXXFLAGS)
+imageAA.o: imageAA.cpp
+	$(CPP) -c imageAA.cpp -o imageAA.o $(CXXFLAGS)
 
-Default\ Profile/Project1App.o: $(GLOBALDEPS) Project1App.cpp Project1App.h Project1Frm.h
-	$(CPP) -c Project1App.cpp -o "Default Profile/Project1App.o" $(CXXFLAGS)
+Project1App.o: Project1App.cpp
+	$(CPP) -c Project1App.cpp -o Project1App.o $(CXXFLAGS)
 
-Default\ Profile/Project1Frm.o: $(GLOBALDEPS) Project1Frm.cpp Project1Frm.h
-	$(CPP) -c Project1Frm.cpp -o "Default Profile/Project1Frm.o" $(CXXFLAGS)
-
-Default\ Profile/Image_AA_based_on_FXAA_private.res: Default\ Profile/Image_AA_based_on_FXAA_private.rc Project1App.rc 
-	$(WINDRES) --input-format=rc -o "Default Profile/Image_AA_based_on_FXAA_private.res" $(RCINCS) DEFAUL~1/IMAGE_~1.RC -O coff
+Project1Frm.o: Project1Frm.cpp
+	$(CPP) -c Project1Frm.cpp -o Project1Frm.o $(CXXFLAGS)
