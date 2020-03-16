@@ -36,8 +36,6 @@ BEGIN_EVENT_TABLE(Project1Frm,wxFrame)
 	EVT_ACTIVATE(Project1Frm::Project1FrmActivate)
 	EVT_BUTTON(ID_WXBUTTON3,Project1Frm::WxButton3Click)
 	EVT_BUTTON(ID_WXBUTTON2,Project1Frm::WxButton2Click)
-	
-	EVT_UPDATE_UI(ID_WXPANEL1,Project1Frm::WxPanel1UpdateUI0)
 	EVT_BUTTON(ID_WXBUTTON1,Project1Frm::WxButton1Click0)
 END_EVENT_TABLE()
 ////Event Table End
@@ -60,17 +58,19 @@ void Project1Frm::CreateGUIControls()
 	//Add the custom code before or after the blocks
 	////GUI Items Creation Start
 
-	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(644, 21), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
+	wxInitAllImageHandlers();   //Initialize graphic format handlers
 
-	WxPanel1 = new wxPanel(this, ID_WXPANEL1, wxPoint(42, 24), wxSize(533, 373));
-
-	WxButton2 = new wxButton(this, ID_WXBUTTON2, _("Anti-alias image"), wxPoint(647, 165), wxSize(231, 43), 0, wxDefaultValidator, _("WxButton2"));
-
-	WxButton3 = new wxButton(this, ID_WXBUTTON3, _("Save Image"), wxPoint(648, 327), wxSize(228, 38), 0, wxDefaultValidator, _("WxButton3"));
+	WxStaticBitmap1 = new wxStaticBitmap(this, ID_WXSTATICBITMAP1, wxNullBitmap, wxPoint(17, 16), wxSize(601, 371) );
 
 	WxOpenFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_OPEN);
 
 	WxSaveFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_SAVE);
+
+	WxButton3 = new wxButton(this, ID_WXBUTTON3, _("Save Image"), wxPoint(648, 327), wxSize(228, 38), 0, wxDefaultValidator, _("WxButton3"));
+
+	WxButton2 = new wxButton(this, ID_WXBUTTON2, _("Anti-alias image"), wxPoint(647, 165), wxSize(231, 43), 0, wxDefaultValidator, _("WxButton2"));
+
+	WxButton1 = new wxButton(this, ID_WXBUTTON1, _("Upload Image"), wxPoint(644, 21), wxSize(231, 42), 0, wxDefaultValidator, _("WxButton1"));
 
 	SetTitle(_("Project1"));
 	SetIcon(wxNullIcon);

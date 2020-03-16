@@ -54,7 +54,12 @@ std::vector< vector< vector< unsigned char > > >
 			green = image.GetGreen(x, y);
 			blue = image.GetBlue(x, y);
 			
+<<<<<<< HEAD
 			row.push_back({red, green, blue});
+=======
+
+			color[y].push_back({red, green, blue});
+>>>>>>> 52eabb2bc725d6ff12c980f3d8ab1cb15ebf8a15
 		}
 		color.push_back(row);
 	}

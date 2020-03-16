@@ -1,4 +1,5 @@
 # Project: Image_AA_based_on_FXAA
+<<<<<<< HEAD
 # Makefile created by Dev-C++ 5.11
 
 CPP      = g++.exe
@@ -13,6 +14,35 @@ BIN      = Image_AA_based_on_FXAA.exe
 CXXFLAGS = $(CXXINCS) 
 CFLAGS   = $(INCS) 
 RM       = rm.exe -f
+=======
+# Compiler: Default GCC compiler
+# Compiler Type: MingW 3
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 03/03/20 12:10
+
+WXLIBNAME = wxmsw29u
+CPP       = g++.exe
+CC        = gcc.exe
+WINDRES   = "windres.exe"
+OBJ       = Default\ Profile/main.o Default\ Profile/imageAA.o Default\ Profile/Project1App.o Default\ Profile/Project1Frm.o Default\ Profile/Image_AA_based_on_FXAA_private.res
+LINKOBJ   = "Default Profile/main.o" "Default Profile/imageAA.o" "Default Profile/Project1App.o" "Default Profile/Project1Frm.o" "Default Profile/Image_AA_based_on_FXAA_private.res"
+LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -g3 
+INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
+CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
+RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
+BIN       = Default Profile/Image_AA_based_on_FXAA.exe
+DEFINES   = 
+CXXFLAGS  = $(CXXINCS) $(DEFINES)   -g3
+CFLAGS    = $(INCS) $(DEFINES)   -g3
+GPROF     = gprof.exe
+ifeq ($(OS),Windows_NT)
+   RM = del /Q
+   FixPath = $(subst /,\,$1)
+else
+   RM = rm -f
+   FixPath = $1
+endif
+LINK      = g++.exe
+>>>>>>> 52eabb2bc725d6ff12c980f3d8ab1cb15ebf8a15
 
 .PHONY: all all-before all-after clean clean-custom
 
