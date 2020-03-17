@@ -1,4 +1,3 @@
-#include <wx/bitmap.h>
 #include <wx/image.h>
 #include <vector>
 
@@ -46,22 +45,21 @@ std::vector< vector< vector< unsigned char > > >
 	
 	for (int y = 0; y < height; y++)
 	{
-		vector< vector< unsigned char> > row;
+		
+		color.push_back(vector< vector< unsigned char > >());
 		
 		for (int x = 0; x < width; x++)
 		{
-			red = image.GetRed(x, y);
+			color[y].push_back(vector< unsigned char >());
+            
+            red = image.GetRed(x, y);
 			green = image.GetGreen(x, y);
 			blue = image.GetBlue(x, y);
 			
-<<<<<<< HEAD
-			row.push_back({red, green, blue});
-=======
-
-			color[y].push_back({red, green, blue});
->>>>>>> 52eabb2bc725d6ff12c980f3d8ab1cb15ebf8a15
+			color[y][x].push_back(red);
+			color[y][x].push_back(green);
+			color[y][x].push_back(blue);
 		}
-		color.push_back(row);
 	}
 	
 	return color;
@@ -77,7 +75,7 @@ wxImage outputImage (std::vector< vector< vector< unsigned char > > > color)
 	height = color.size();
 	width = color[0].size();
 	
-	Image = wxImage(width, height);
+	wxImage Image = wxImage(width, height);
 	
 	for (int y = 0; y < height; y++)
 	{	
@@ -101,24 +99,24 @@ wxImage outputImage (std::vector< vector< vector< unsigned char > > > color)
 std::vector< vector< double > > convertColortoLuma
 			(std::vector< vector< vector < unsigned char > > > color)
 {
-	std::vector< vector<unsigned char> > luma;
-	unsigned char currLuma;
+	std::vector< vector< double > > luma;
+	double currLuma;
+	int height, width;
 	
 	height = color.size();
 	width = color[0].size();
 	
 	for (int y = 0; y < height; y++)
 	{
-		vector< double > row
+		luma.push_back(vector< double >());
 		
 		for (int x = 0; x < width; x++)
 		{
 			currLuma = 	(double) color[y][x][0] / 255 * 0.2126 
-						+ color[y][x][1] /255 * 0.7152
-						+ color[y][x][2] /255 * 0.0722;
-			row.push_back(currLuma);
+						+ (double) color[y][x][1] / 255 * 0.7152
+						+ (double) color[y][x][2] / 255 * 0.0722;
+			luma[y].push_back(currLuma);
 		}
-		luma.push_back(row);
 	}
 	
 	return luma;
@@ -138,8 +136,8 @@ bool classifyEdgeHorizontal(std::vector< vector< double > > luma, int y, int x)
 					+ dabs(-2.0 * luma[y][x] + luma[y][x-1] + luma[y][x+1]) * 2.0  
 					+ dabs(-2.0 * luma[y+1][x] + luma[y+1][x-1] + luma[y+1][x+1]);
 					
-	isHorizontal = edgeHorizontal > edgeVertical ? True : False;
-	return isHorizontal
+	isHorizontal = edgeHorizontal > edgeVertical;
+	return isHorizontal;
 }
 
 //Main function for antialiasing logic, takes inputs and outputs of
@@ -161,11 +159,11 @@ std::vector< vector< vector< unsigned char > > > antiAlias
 	height = color.size();
 	width = color[0].size();
 	
-	luma = convertColortoLuma(color)
+	luma = convertColortoLuma(color);
 	
 	for (int y = 1; y < height-1; y++)
 	{
-		vector< vector< unsigned char > > row;
+		aaColor.push_back(vector< vector< unsigned char > >());
 		for (int x = 1; x < width-1; x++)
 		{
 			rangeMin = dmin(luma[y][x], dmin(dmin(luma[y-1][x], luma[y][x-1]), dmin(luma[y+1][x], luma[y][x+1])));
@@ -176,20 +174,47 @@ std::vector< vector< vector< unsigned char > > > antiAlias
 			if (range < edgeThresholdMin || 
 				range < edgeThreshold * rangeMax)
 			{
-				row.push_back(color[y][x]);
+				aaColor[y].push_back(color[y][x]);
 			}
 			
 			// Is the local edge horizontal or vertical ?
 			isHorizontal = classifyEdgeHorizontal(luma, y, x);
 			
-			if (isHorizontal){
-				row.push_back({0, 0, 255});
+			if (isHorizontal)
+			{
+		    aaColor[y].push_back(vector< unsigned char >());
+				aaColor[y][x].push_back(0);
+				aaColor[y][x].push_back(0);
+				aaColor[y][x].push_back(255);
 			}
-			else{
-				row.push_back({0, 255, 255});	
+			else
+			{
+		    aaColor[y].push_back(vector< unsigned char >());
+				aaColor[y][x].push_back(0);
+				aaColor[y][x].push_back(255);
+				aaColor[y][x].push_back(255);
 			} 
+//			for(uint i = 0; i < FXAA_SEARCH_STEPS; i++) 
+//			{
+//				#if FXAA_SEARCH_ACCELERATION == 1
+//				{	
+//					if(!doneN) lumaEndN = FxaaLuma(FxaaTexture(tex, posN.xy).xyz);
+//					if(!doneP) lumaEndP = FxaaLuma(FxaaTexture(tex, posP.xy).xyz);
+//				}
+//				#else
+//				{
+//					if(!doneN) lumaEndN = FxaaLuma(FxaaTextureGrad(tex, posN.xy, offNP).xyz);
+//					if(!doneP) lumaEndP = FxaaLuma(FxaaTextureGrad(tex, posP.xy, offNP).xyz);
+//				}
+//				#endif
+//				doneN = doneN || (abs(lumaEndN - lumaN) >= gradientN);
+//				doneP = doneP || (abs(lumaEndP - lumaN) >= gradientN);
+//				if(doneN && doneP) break;
+//				if(!doneN) posN -= offNP;
+//				if(!doneP) posP += offNP;
+//			}
+			
 		}
-		aaColor.push_back(row);
 	}
 	
 	return aaColor;
@@ -200,16 +225,36 @@ std::vector< vector< vector< unsigned char > > > antiAlias
 //Invokable external function for antialiasing
 //Includes the conversions to and from 3D vector format and wxImages 
 
-wxImage antiAliasImage (wxImage inputImage){
+wxImage antiAliasImage  ( wxImage inputImage,
+                          double edgeThreshold, 
+  		                    double edgeThresholdMin
+                        )
+{
 	wxImage outImg;
-	std::vector< vector< vector< unsigned char > > > color;
-	std::vector< vector< vector< unsigned char > > > outColor;
+	vector< vector< vector< unsigned char > > > color;
+	vector< vector< vector< unsigned char > > > outColor;
 	
-	color = retrieveImageColor(image);
-	outColor = 	antiAlias 	(	std::vector< vector< vector< unsigned char > > > color,
-								double edgeThreshold, 
-								double edgeThresholdMin
-							);
+	color = retrieveImageColor(inputImage);
+	outColor = 	antiAlias 	(color, edgeThreshold, edgeThresholdMin);
 	outImg = outputImage(outColor);
 	return outImg;
 }
+
+/*
+
+config variables from FXAA whitepaper
+
+FXAA_EDGE_THRESHOLD
+The minimum amount of local contrast required to apply algorithm.
+1/3 – too little
+1/4 – low quality
+1/8 – high quality
+1/16 – overkill
+
+FXAA_EDGE_THRESHOLD_MIN
+Trims the algorithm from processing darks.
+1/32 – visible limit
+1/16 – high quality
+1/12 – upper limit (start of visible unfiltered edges)
+
+*/
